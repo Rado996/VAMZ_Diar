@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "329525408967",
+    "firebase_url": "https://vamz-semestralka-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "vamz-semestralka",
+    "storage_bucket": "vamz-semestralka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329525408967:android:614df9ad79198501b23ae2",
+        "android_client_info": {
+          "package_name": "com.Fili.vamz_diar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329525408967-g93ib5kub6gej6avfdrgd7s3dpikcurs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZwE4yobxckUGMiWKKXCflyPPiYvcQEvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329525408967-g93ib5kub6gej6avfdrgd7s3dpikcurs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

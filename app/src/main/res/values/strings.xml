@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">VAMZ_Diar</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="reminders_button_text">Pripomienky</string>
+    <string name="todos_button_text">Úlohy</string>
+    <string name="notes_text">Poznámky</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="new_note_name_hint">Názov poznámky</string>
+    <string name="new_note_text_hint">Text poznámky</string>
+    <string name="new_note_save_button">Uložiť poznámku</string>
+    <string name="new_note_btn">Nová poznámka</string>
+</resources>
