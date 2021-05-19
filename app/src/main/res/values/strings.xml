@@ -28,4 +28,5 @@
     <string name="todo_name_hint">Názov zoznamu</string>
     <string name="add_new_todoitem">Pridať</string>
     <string name="save_new_todolist">Uložiť zoznam</string>
+    <string name="new_todoitem_already_added">Táto úloha sa už v zozname nachádza.</string>
 </resources>

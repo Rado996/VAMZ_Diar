@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -77,8 +78,12 @@ class NewTodoFragment : Fragment() {
     }
 
     private fun addnewTodoItem() {
-        if(!binding.newTodoitemName.text.isBlank())
-            viewModel.addNewTodoItem(binding.newTodoitemName.text.toString())
+        if(!binding.newTodoitemName.text.isBlank()) {
+            if(viewModel.addNewTodoItem(binding.newTodoitemName.text.toString()))
+                binding.newTodoitemName.text.clear()
+            else
+                Toast.makeText(context, R.string.new_todoitem_already_added, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupTodosObserver() {

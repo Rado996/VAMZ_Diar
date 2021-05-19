@@ -11,6 +11,8 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class SharedViewModel: ViewModel() {
 
@@ -62,7 +64,12 @@ class SharedViewModel: ViewModel() {
                      * will be null for the first child node of a location.
                      */
                     override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                        val todo = snapshot.getValue(TodoList::class.java)
+                        val todoListName = snapshot.child("todoListName").value.toString()
+                        val todoItems = mutableMapOf<String, Boolean>()
+                        snapshot.child("todos").children.forEach {
+                            todoItems.put(it.key.toString(),it.value.toBoolean())
+                        }
+                        val todo = TodoList(todoListName, todoItems)
                         firebaseTodos.add(todo!!)
                         _todosList.postValue(firebaseTodos)
                     }
@@ -216,9 +223,14 @@ class SharedViewModel: ViewModel() {
             }
     }
 
-    fun addNewTodoItem(todoItem: String) {
-        newtodoItemsList.add(todoItem)
-        _newTodoItemsLiveData.postValue(newtodoItemsList)
+    fun addNewTodoItem(todoItem: String): Boolean {
+        if(!newtodoItemsList.contains(todoItem)) {
+            newtodoItemsList.add(todoItem)
+            _newTodoItemsLiveData.postValue(newtodoItemsList)
+            return true
+        }
+        return false
+
     }
 
     fun saveNewTodoList(todoListName: String) {
@@ -228,7 +240,10 @@ class SharedViewModel: ViewModel() {
         fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Todos").push().setValue(newTodoList).addOnSuccessListener {
 
         }
-
     }
 
+}
+
+private fun Any?.toBoolean(): Boolean {
+    return if (this.toString().equals("true")) true else false
 }
