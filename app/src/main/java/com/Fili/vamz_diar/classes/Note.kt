@@ -4,12 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Note ( val noteName: String? = null, val noteText: String? = null) :Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString()
     )
-
-
 
     companion object CREATOR : Parcelable.Creator<Note> {
         override fun createFromParcel(parcel: Parcel): Note {

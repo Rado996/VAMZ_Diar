@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_notesFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_todosFragment"
+            app:destination="@id/todosFragment" />
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -43,4 +46,33 @@
         android:name="com.Fili.vamz_diar.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/todosFragment"
+        android:name="com.Fili.vamz_diar.TodosFragment"
+        android:label="fragment_todos"
+        tools:layout="@layout/fragment_todos" >
+        <action
+            android:id="@+id/action_todosFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+        <action
+            android:id="@+id/action_todosFragment_to_newTodoFragment"
+            app:destination="@id/newTodoFragment" />
+        <action
+            android:id="@+id/action_todosFragment_to_todoDetailFragment"
+            app:destination="@id/todoDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTodoFragment"
+        android:name="com.Fili.vamz_diar.NewTodoFragment"
+        android:label="fragment_new_todo"
+        tools:layout="@layout/fragment_new_todo" />
+    <fragment
+        android:id="@+id/todoDetailFragment"
+        android:name="com.Fili.vamz_diar.TodoDetailFragment"
+        android:label="fragment_todo_detail"
+        tools:layout="@layout/fragment_todo_detail" >
+        <argument
+            android:name="todo"
+            app:argType="com.Fili.vamz_diar.classes.TodoList" />
+    </fragment>
 </navigation>

@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.PlaceholderFragment">
-
+    tools:context=".TodosFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <Button
-        android:id="@+id/go_to_reminders_from_notes"
+        android:id="@+id/go_to_notes_from_todos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/reminders_button_text"
+        android:text="@string/notes_button_text"
         android:textAllCaps="false"
         android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/notes_text_view"
+        android:id="@+id/todos_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/notes_text"
-
+        android:text="@string/todos_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/go_to_todos_from_notes"
+        android:id="@+id/go_to_reminders_from_todos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
-        android:text="@string/todos_button_text"
+        android:text="@string/reminders_button_text"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/notes_recycler_view"
+        android:id="@+id/todos_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/go_to_todos_from_notes"
+        app:layout_constraintBottom_toTopOf="@+id/go_to_reminders_from_todos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notes_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/todos_text_view"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/create_new_notebtn"
+        android:id="@+id/create_new_todobtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_note_btn"
+        android:text="@string/new_todo_btn"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/go_to_todos_from_notes"
+        app:layout_constraintEnd_toStartOf="@+id/go_to_reminders_from_todos"
         app:layout_constraintHorizontal_bias="0.549"
-        app:layout_constraintStart_toEndOf="@+id/go_to_reminders_from_notes"
-        app:layout_constraintTop_toTopOf="@+id/go_to_todos_from_notes" />
+        app:layout_constraintStart_toEndOf="@+id/go_to_notes_from_todos"
+        app:layout_constraintTop_toTopOf="@+id/go_to_reminders_from_todos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

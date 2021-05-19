@@ -21,4 +21,11 @@
     <string name="authError">Skontrolujte zadané údaje</string>
     <string name="login_succes">Úspešne prihlásený.</string>
     <string name="register_succes">Úspešne zaregistrovaný.</string>
+    <string name="new_todo_btn">Nový zoznam úloh</string>
+    <string name="todos_text">Úlohy</string>
+    <string name="notes_button_text">Poznámky</string>
+    <string name="todo_item_hint">Úloha</string>
+    <string name="todo_name_hint">Názov zoznamu</string>
+    <string name="add_new_todoitem">Pridať</string>
+    <string name="save_new_todolist">Uložiť zoznam</string>
 </resources>
