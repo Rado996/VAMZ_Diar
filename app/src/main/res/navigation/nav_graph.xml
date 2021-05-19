@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_notesFragment_to_noteDetailFragment"
             app:destination="@id/noteDetailFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -35,4 +38,9 @@
             android:name="note"
             app:argType="com.Fili.vamz_diar.classes.Note" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.Fili.vamz_diar.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
