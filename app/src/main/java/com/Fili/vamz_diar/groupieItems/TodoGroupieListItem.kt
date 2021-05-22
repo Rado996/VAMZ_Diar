@@ -8,7 +8,7 @@ import com.Fili.vamz_diar.classes.TodoList
 import com.Fili.vamz_diar.databinding.TodolistItemBinding
 import com.xwray.groupie.viewbinding.BindableItem
 
-class TodoListItem(private val todoList: TodoList) : BindableItem<TodolistItemBinding>() {
+class TodoGroupieListItem(private val todoList: TodoList) : BindableItem<TodolistItemBinding>() {
     /**
      * Perform any actions required to set up the view for display.
      *

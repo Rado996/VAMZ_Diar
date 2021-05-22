@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewReminderFragment">
+
+
+    <EditText
+        android:id="@+id/new_reminder_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/new_reminder_name_hint"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/new_reminder_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/new_reminder_desc_hint"
+        app:layout_constraintStart_toStartOf="@+id/new_reminder_date"
+        app:layout_constraintTop_toBottomOf="@+id/new_reminder_date" />
+
+    <TextView
+        android:id="@+id/new_reminder_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/new_reminder_name"
+        app:layout_constraintTop_toBottomOf="@+id/new_reminder_name" />
+
+    <TextView
+        android:id="@+id/new_reminder_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/new_reminder_date"
+        app:layout_constraintTop_toTopOf="@+id/new_reminder_date" />
+
+    <Button
+        android:id="@+id/new_reminder_savebtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/save_new_reminder"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

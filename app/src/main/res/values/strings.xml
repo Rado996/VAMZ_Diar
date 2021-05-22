@@ -29,4 +29,11 @@
     <string name="add_new_todoitem">Pridať</string>
     <string name="save_new_todolist">Uložiť zoznam</string>
     <string name="new_todoitem_already_added">Táto úloha sa už v zozname nachádza.</string>
+    <string name="new_todo_added">Zoznam bol úspešne vytvorený.</string>
+    <string name="new_reminders_button">Nová pripomienka</string>
+    <string name="new_reminder_name_hint">Názov pripomienky</string>
+    <string name="new_reminder_desc_hint">Popis pripomienky</string>
+    <string name="save_new_reminder">Uložiť pripomienku</string>
+    <string name="date_picker_past_time">Bol zvolený čas v minulosti.</string>
+    <string name="new_reminder_added">Pripomienka bola vytvorená</string>
 </resources>

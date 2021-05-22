@@ -1,22 +1,18 @@
 package com.Fili.vamz_diar
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.map
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.Fili.vamz_diar.classes.Note
 import com.Fili.vamz_diar.databinding.FragmentNotesBinding
-import com.Fili.vamz_diar.groupieItems.NoteItem
+import com.Fili.vamz_diar.groupieItems.NoteGroupieItem
 
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -42,7 +38,6 @@ class NotesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
     }
 
@@ -74,6 +69,7 @@ class NotesFragment : Fragment() {
     private fun setupOnClicks() {
         binding.createNewNotebtn.setOnClickListener { createNewNote() }
         binding.goToTodosFromNotes.setOnClickListener { findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToTodosFragment()) }
+        binding.goToRemindersFromNotes.setOnClickListener { findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToRemindersFragment()) }
     }
 
     private fun loadNotes() {
@@ -84,9 +80,9 @@ class NotesFragment : Fragment() {
         })
     }
 
-    private fun List<Note>.toNoteItem(): List<NoteItem> {
+    private fun List<Note>.toNoteItem(): List<NoteGroupieItem> {
         return this.map {
-            NoteItem(it)
+            NoteGroupieItem(it)
         }
     }
 

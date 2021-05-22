@@ -10,7 +10,7 @@ import com.Fili.vamz_diar.databinding.NotesItemBinding
 
 import com.xwray.groupie.viewbinding.BindableItem
 
-class NoteItem(private val pnote: Note): BindableItem<NotesItemBinding>() {
+class NoteGroupieItem(private val pnote: Note): BindableItem<NotesItemBinding>() {
     /**
      * Perform any actions required to set up the view for display.
      *

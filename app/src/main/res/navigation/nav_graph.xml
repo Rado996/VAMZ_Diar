@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_notesFragment_to_todosFragment"
             app:destination="@id/todosFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_remindersFragment"
+            app:destination="@id/remindersFragment" />
     </fragment>
     <fragment
         android:id="@+id/newNoteFragment"
@@ -40,6 +43,9 @@
         <argument
             android:name="note"
             app:argType="com.Fili.vamz_diar.classes.Note" />
+        <action
+            android:id="@+id/action_noteDetailFragment_to_newNoteFragment"
+            app:destination="@id/newNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -60,6 +66,9 @@
         <action
             android:id="@+id/action_todosFragment_to_todoDetailFragment"
             app:destination="@id/todoDetailFragment" />
+        <action
+            android:id="@+id/action_todosFragment_to_remindersFragment"
+            app:destination="@id/remindersFragment" />
     </fragment>
     <fragment
         android:id="@+id/newTodoFragment"
@@ -74,5 +83,43 @@
         <argument
             android:name="todo"
             app:argType="com.Fili.vamz_diar.classes.TodoList" />
+        <action
+            android:id="@+id/action_todoDetailFragment_to_newTodoFragment"
+            app:destination="@id/newTodoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/remindersFragment"
+        android:name="com.Fili.vamz_diar.RemindersFragment"
+        android:label="fragment_reminders"
+        tools:layout="@layout/fragment_reminders" >
+        <action
+            android:id="@+id/action_remindersFragment_to_todosFragment"
+            app:destination="@id/todosFragment" />
+        <action
+            android:id="@+id/action_remindersFragment_to_notesFragment"
+            app:destination="@id/notesFragment" />
+        <action
+            android:id="@+id/action_remindersFragment_to_newReminderFragment"
+            app:destination="@id/newReminderFragment" />
+        <action
+            android:id="@+id/action_remindersFragment_to_reminderDetailFragment"
+            app:destination="@id/reminderDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newReminderFragment"
+        android:name="com.Fili.vamz_diar.NewReminderFragment"
+        android:label="fragment_new_reminder"
+        tools:layout="@layout/fragment_new_reminder" />
+    <fragment
+        android:id="@+id/reminderDetailFragment"
+        android:name="com.Fili.vamz_diar.ReminderDetailFragment"
+        android:label="fragment_reminder_detail"
+        tools:layout="@layout/fragment_reminder_detail" >
+        <action
+            android:id="@+id/action_reminderDetailFragment_to_newReminderFragment"
+            app:destination="@id/newReminderFragment" />
+        <argument
+            android:name="reminder"
+            app:argType="com.Fili.vamz_diar.classes.reminder" />
     </fragment>
 </navigation>

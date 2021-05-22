@@ -10,13 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.Fili.vamz_diar.classes.Note
 import com.Fili.vamz_diar.classes.TodoList
-import com.Fili.vamz_diar.databinding.FragmentNotesBinding
-import com.Fili.vamz_diar.databinding.FragmentTodoDetailBinding
 import com.Fili.vamz_diar.databinding.FragmentTodosBinding
-import com.Fili.vamz_diar.groupieItems.NoteItem
-import com.Fili.vamz_diar.groupieItems.TodoListItem
+import com.Fili.vamz_diar.groupieItems.TodoGroupieListItem
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -63,6 +59,7 @@ class TodosFragment : Fragment() {
         binding.createNewTodobtn.setOnClickListener { findNavController().navigate(TodosFragmentDirections.actionTodosFragmentToNewTodoFragment()) }
         binding.goToNotesFromTodos.setOnClickListener { findNavController().navigate(TodosFragmentDirections.actionTodosFragmentToNotesFragment()) }
         binding.createNewTodobtn.setOnClickListener { findNavController().navigate(TodosFragmentDirections.actionTodosFragmentToNewTodoFragment()) }
+        binding.goToRemindersFromTodos.setOnClickListener { findNavController().navigate(TodosFragmentDirections.actionTodosFragmentToRemindersFragment()) }
     }
 
     private fun loadTodos() {
@@ -72,9 +69,9 @@ class TodosFragment : Fragment() {
         })
     }
 
-    private fun List<TodoList>.toTodoListItem(): List<TodoListItem> {
+    private fun List<TodoList>.toTodoListItem(): List<TodoGroupieListItem> {
         return this.map {
-            TodoListItem(it)
+            TodoGroupieListItem(it)
         }
     }
 

@@ -11,12 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.Fili.vamz_diar.classes.TodoList
-import com.Fili.vamz_diar.databinding.FragmentNewNoteBinding
 import com.Fili.vamz_diar.databinding.FragmentNewTodoBinding
-import com.Fili.vamz_diar.databinding.FragmentTodoDetailBinding
-import com.Fili.vamz_diar.databinding.FragmentTodosBinding
-import com.Fili.vamz_diar.groupieItems.TodoItem
-import com.Fili.vamz_diar.groupieItems.TodoListItem
+import com.Fili.vamz_diar.groupieItems.TodoGroupieItem
+import com.Fili.vamz_diar.groupieItems.TodoGroupieNewItem
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -73,8 +70,10 @@ class NewTodoFragment : Fragment() {
     }
 
     private fun savenewTodoList() {
-        if(adapter.groupCount >0 && !binding.newTodoName.text.isBlank())
-            viewModel.saveNewTodoList(binding.newTodoName.text.toString())
+        if(adapter.groupCount >0 && !binding.newTodoName.text.isBlank()) {
+            viewModel.saveNewTodoList(view, binding.newTodoName.text.toString())
+
+        }
     }
 
     private fun addnewTodoItem() {
@@ -83,6 +82,7 @@ class NewTodoFragment : Fragment() {
                 binding.newTodoitemName.text.clear()
             else
                 Toast.makeText(context, R.string.new_todoitem_already_added, Toast.LENGTH_SHORT).show()
+
         }
     }
 
@@ -92,9 +92,9 @@ class NewTodoFragment : Fragment() {
         })
     }
 
-    private fun List<String>.toTodoItem(): List<TodoItem> {
+    private fun List<String>.toTodoItem(): List<TodoGroupieNewItem> {
         return this.map {
-            TodoItem(it)
+            TodoGroupieNewItem(it)
         }
     }
 

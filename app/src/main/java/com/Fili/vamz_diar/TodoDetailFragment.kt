@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.Fili.vamz_diar.classes.TodoItem
 import com.Fili.vamz_diar.classes.TodoList
-import com.Fili.vamz_diar.databinding.FragmentNotesBinding
 import com.Fili.vamz_diar.databinding.FragmentTodoDetailBinding
+import com.Fili.vamz_diar.groupieItems.TodoGroupieItem
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val TodoP = "TodoP"
+
+private const val NavigationParameter = "todo"
 
 
 /**
@@ -31,12 +32,12 @@ class TodoDetailFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
-    private val viewModel: SharedViewModel by activityViewModels()
+    val viewModel: SharedViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            TodoParam = it.getParcelable<TodoList>(TodoP)
+            TodoParam = it.getParcelable<TodoList>(NavigationParameter)
 
         }
     }
@@ -46,8 +47,28 @@ class TodoDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todo_detail, container, false)
+        _binding = FragmentTodoDetailBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.todoDetailName.text = TodoParam!!.todoListName
+        binding.todoDetailRecyclerview.adapter = adapter
+        binding.todoDetailRecyclerview.layoutManager = LinearLayoutManager(context)
+
+
+        adapter.update(TodoParam!!.todos!!.toTodoGroupieItem())
+
+    }
+
+    private fun MutableMap<String,TodoItem>.toTodoGroupieItem(): List<TodoGroupieItem> {
+        return this.map {
+            TodoGroupieItem(it.value, TodoParam!!.todoListID.toString())
+        }
+    }
+
+
 
     companion object {
         /**
@@ -63,7 +84,7 @@ class TodoDetailFragment : Fragment() {
         fun newInstance(Todo: TodoList) =
             TodoDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(TodoP, Todo)
+                    putParcelable(NavigationParameter, Todo)
                 }
             }
     }

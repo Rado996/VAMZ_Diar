@@ -7,7 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.Fili.vamz_diar.databinding.ActivityAuthenticationBinding
 import com.Fili.vamz_diar.databinding.ActivityMain2Binding
 
-private lateinit var binding: ActivityAuthenticationBinding
+internal lateinit var binding: ActivityAuthenticationBinding
 private lateinit var navController: NavController
 
 class AuthenticationActivity : AppCompatActivity() {
