@@ -12,8 +12,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reminders"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/condiment"
+        android:text="@string/reminders"
+        android:textColor="@color/purple_500"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,24 +35,25 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
+    <ImageButton
         android:id="@+id/go_to_todos_from_reminders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="@string/todos_button_text"
+        android:src="@drawable/ic_baseline_checklist_rtl_24"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
+<!--    android:text="@string/todos_button_text"-->
+    <ImageButton
         android:id="@+id/go_to_notes_from_reminders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/notes_button_text"
+        android:src="@drawable/ic_baseline_edit_note_24"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+<!--    android:text="@string/notes_button_text"-->
 
     <Button
         android:id="@+id/new_reminderbtn"

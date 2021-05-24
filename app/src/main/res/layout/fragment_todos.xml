@@ -8,31 +8,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <Button
+    <ImageButton
         android:id="@+id/go_to_notes_from_todos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/notes_button_text"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/ic_baseline_edit_note_24"
         android:textAllCaps="false"
-        android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+<!--    android:text="@string/notes_button_text"-->
+
+    <!--        android:text="@string/reminders_button_text"-->
 
     <TextView
         android:id="@+id/todos_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/condiment"
         android:text="@string/todos_text"
+        android:textColor="@color/purple_500"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/go_to_reminders_from_todos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:text="@string/reminders_button_text"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/ic_baseline_alarm_24"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
