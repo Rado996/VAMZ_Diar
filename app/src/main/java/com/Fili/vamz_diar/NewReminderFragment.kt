@@ -7,21 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.Fili.vamz_diar.classes.reminder
 import com.Fili.vamz_diar.databinding.FragmentNewReminderBinding
 import java.util.*
 
 
-private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM1 = "reminder"
 
 
 /**
- * A simple [Fragment] subclass.
+ * A simple [Fragment] subclass to create new reminder.
  * Use the [NewReminderFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class NewReminderFragment : Fragment() {
 
-    private var param1: String? = null
+    private var param1: reminder? = null
     private var _binding: FragmentNewReminderBinding? = null
     private val binding get() = _binding!!
 
@@ -31,11 +32,10 @@ class NewReminderFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            param1 = it.getParcelable(ARG_PARAM1)
 
         }
     }
-
 
 
     override fun onCreateView(
@@ -58,12 +58,18 @@ class NewReminderFragment : Fragment() {
         }
     }
 
+    /**
+     * Method to set current Date and Time into TextView
+     */
     private fun setDateTime() {
         val calendar = Calendar.getInstance()
         binding.newReminderDate.text = calendar.get(Calendar.DATE).toString().plus(".").plus(calendar.get(Calendar.MONTH).toString()).plus(".").plus(calendar.get(Calendar.YEAR).toString())
         binding.newReminderTime.text = calendar.get(Calendar.HOUR).toString().plus(":").plus(calendar.get(Calendar.MINUTE).toString())
     }
 
+    /**
+     * Method to set up onClick Listeners
+     */
     private fun setupOnClicks() {
         binding.newReminderDate.setOnClickListener {
             val dateView = binding.newReminderDate
@@ -91,10 +97,10 @@ class NewReminderFragment : Fragment() {
          * @return A new instance of fragment NewReminderFragment.
          * */
         @JvmStatic
-        fun newInstance(param1: String) =
+        fun newInstance(param1: reminder) =
             NewReminderFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putParcelable(ARG_PARAM1, param1)
                 }
             }
     }

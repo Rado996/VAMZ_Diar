@@ -13,7 +13,7 @@ import com.Fili.vamz_diar.databinding.FragmentNewNoteBinding
 private const val NavigationParameter = "note"
 
 /**
- * A simple [Fragment] subclass.
+ * A simple [Fragment] subclass to create new Note.
  * Use the [NewNoteFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
@@ -47,6 +47,9 @@ class NewNoteFragment : Fragment() {
 
     }
 
+    /**
+     * method that uses viewModel method saveNewNote to save new Note to the database
+     */
     private fun saveNewNote() {
         viewModel.saveNewNote(_binding?.newNoteName?.text.toString(), _binding?.newNoteText?.text.toString())
     }

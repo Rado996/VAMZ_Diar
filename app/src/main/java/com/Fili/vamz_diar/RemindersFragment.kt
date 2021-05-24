@@ -17,17 +17,12 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
 
-private const val ARG_PARAM1 = "param1"
-
-
 /**
- * A simple [Fragment] subclass.
+ * A simple [Fragment] subclass that holds all the reminders from database.
  * Use the [RemindersFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class RemindersFragment : Fragment() {
-
-    private var param1: String? = null
 
     private var _binding: FragmentRemindersBinding? = null
     private val binding get() = _binding!!
@@ -38,10 +33,7 @@ class RemindersFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
 
-        }
     }
 
     override fun onCreateView(
@@ -69,18 +61,27 @@ class RemindersFragment : Fragment() {
 
     }
 
+    /**
+     * method to setup observer for remindersList mutableLiveData and updating adapter of recycler view
+     */
     private fun loadReminders() {
         viewModel.remindersList.observe(viewLifecycleOwner, Observer {
             adapter.update(it.toReminderItem())
         })
     }
 
+    /**
+     * method map List of reminders to List of ReminderGroupieItems for groupie adapter of recycler view
+     */
     private fun List<reminder>.toReminderItem(): List<ReminderGroupieItem> {
         return this.map {
             ReminderGroupieItem(it)
         }
     }
 
+    /**
+     * setup onClick listeners for buttons
+     */
     private fun setupOnClicks() {
         binding.goToNotesFromReminders.setOnClickListener { findNavController().navigate(RemindersFragmentDirections.actionRemindersFragmentToNotesFragment()) }
         binding.goToTodosFromReminders.setOnClickListener { findNavController().navigate(RemindersFragmentDirections.actionRemindersFragmentToTodosFragment()) }
@@ -97,16 +98,12 @@ class RemindersFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
+         *
          * @return A new instance of fragment RemindersFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String) =
-            RemindersFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                }
-            }
+        fun newInstance() =
+            RemindersFragment()
     }
 }

@@ -10,7 +10,7 @@ import com.xwray.groupie.viewbinding.BindableItem
 
 class ReminderGroupieItem(private val preminder: reminder): BindableItem<ReminderItemBinding>() {
     /**
-     * Perform any actions required to set up the view for display.
+     * Class that displays reminders data in recycler view in RemindersFragment
      *
      * @param viewBinding The ViewBinding to bind
      * @param position The adapter position

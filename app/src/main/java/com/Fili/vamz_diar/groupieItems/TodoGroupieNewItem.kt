@@ -8,12 +8,10 @@ import com.xwray.groupie.viewbinding.BindableItem
 
 class TodoGroupieNewItem (private val todoItemName: String) : BindableItem<TodonewitemItemBinding>(){
     /**
-     * Perform any actions required to set up the view for display.
-     *
+     * Class that displays TodoNew items data in recycler view in newTodoFragment
      * @param viewBinding The ViewBinding to bind
      * @param position The adapter position
      */
-
 
     override fun bind(viewBinding: TodonewitemItemBinding, position: Int) {
         viewBinding.newTodoitemItem.text = todoItemName

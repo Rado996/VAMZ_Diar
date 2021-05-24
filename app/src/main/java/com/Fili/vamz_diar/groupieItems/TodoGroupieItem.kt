@@ -11,7 +11,7 @@ import com.xwray.groupie.viewbinding.BindableItem
 
 class TodoGroupieItem (private val todoItem: TodoItem, private val todoListID: String) : BindableItem<TodolistitemItemBinding>(){
     /**
-     * Perform any actions required to set up the view for display.
+     * Class that displays TodoItem data in recycler view in TodoDetailFragment.
      *
      * @param viewBinding The ViewBinding to bind
      * @param position The adapter position

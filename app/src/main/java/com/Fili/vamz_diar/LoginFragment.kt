@@ -14,7 +14,7 @@ import com.Fili.vamz_diar.databinding.FragmentLoginBinding
 
 
 /**
- * A simple [Fragment] subclass.
+ * A simple [Fragment] subclass for Logging in to the aplication or registration.
  *
  */
 class LoginFragment : Fragment() {
@@ -37,6 +37,9 @@ class LoginFragment : Fragment() {
         return view
     }
 
+    /**
+     * Setups onClick listeners for buttons
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.loginBtn.setOnClickListener { loginUser() }
         binding.registrationBtn.setOnClickListener { registerUser() }
@@ -68,6 +71,9 @@ class LoginFragment : Fragment() {
 
     }
 
+    /**
+     * method checks user input and register him trough viewModel method registerUser.
+     */
     private fun registerUser() {
         if(binding.authLoginEmail.text.isBlank() || binding.authLoginPassword.text.isBlank())
             Toast.makeText(context, R.string.authError, Toast.LENGTH_SHORT).show()
@@ -77,7 +83,9 @@ class LoginFragment : Fragment() {
             viewModel.registerNewUser(userEmail,userPassword)
         }
     }
-
+    /**
+     * method checks user input and sing him in trough viewModel method logInUser.
+     */
     private fun loginUser() {
         if(binding.authLoginEmail.text.isBlank() || binding.authLoginPassword.text.isBlank())
             Toast.makeText(context, R.string.authError, Toast.LENGTH_SHORT).show()

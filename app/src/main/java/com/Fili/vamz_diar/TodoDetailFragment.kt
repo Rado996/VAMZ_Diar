@@ -56,12 +56,14 @@ class TodoDetailFragment : Fragment() {
         binding.todoDetailName.text = TodoParam!!.todoListName
         binding.todoDetailRecyclerview.adapter = adapter
         binding.todoDetailRecyclerview.layoutManager = LinearLayoutManager(context)
-
-
         adapter.update(TodoParam!!.todos!!.toTodoGroupieItem())
 
     }
 
+    /**
+     * method map mutableMap of strings and TodoItems
+     * to List of TodoGroupieItem for groupie adapter of recycler view
+     */
     private fun MutableMap<String,TodoItem>.toTodoGroupieItem(): List<TodoGroupieItem> {
         return this.map {
             TodoGroupieItem(it.value, TodoParam!!.todoListID.toString())

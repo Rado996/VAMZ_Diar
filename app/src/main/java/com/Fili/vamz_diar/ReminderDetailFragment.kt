@@ -20,7 +20,7 @@ private const val ARG_PARAM1 = "reminder"
 
 
 /**
- * A simple [Fragment] subclass.
+ * A simple [Fragment] subclass that shows detail of selected reminder from recycler view.
  * Use the [ReminderDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
@@ -64,6 +64,9 @@ class ReminderDetailFragment : Fragment() {
 
     }
 
+    /**
+     * Function to setup onClick listeners for edit and delete buttons
+     */
     private fun setupOnClicks() {
 
     }

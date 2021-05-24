@@ -17,6 +17,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 
+/**
+ * ViewModel for keeping al the data of aplications as Notes, Todos,
+ * reminders as well as comunicating with database
+ */
+
 class SharedViewModel: ViewModel() {
 
     private val firebaseReminders= mutableListOf<reminder>()
@@ -59,6 +64,10 @@ class SharedViewModel: ViewModel() {
         loadReminders()
     }
 
+    /**
+     * Method to setup ChildListeners on database reference where Todos are saved
+     *
+     */
     private fun loadTodos() {
         if(FirebaseAuthInstance.currentUser != null) {
             fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Todos").addChildEventListener(
@@ -128,8 +137,12 @@ class SharedViewModel: ViewModel() {
                 })
         }
     }
-
-
+    /**
+     * Method to create new instance of Note, and stores it in database
+     * @param noteName name of the Note
+     * @param noteText text of the Note
+     * @param view to display message and navigate back from form
+     */
     fun saveNewNote(noteName: String, noteText: String){
 
         if(FirebaseAuthInstance.currentUser != null) {
@@ -138,11 +151,10 @@ class SharedViewModel: ViewModel() {
 
             }
         }
-//        _notesList.apply {
-//            value = firebaseNotes.toList()
-//        }
     }
-
+    /**
+     * Method to setup ChildListeners on database reference where Notes are saved     *
+     */
     fun loadNotes() {
 //        _notesList.apply {
 //            value = listOf(Note("Prvá poznamka", "Text prvej poznamky"))
@@ -215,7 +227,9 @@ class SharedViewModel: ViewModel() {
 //        _notesList.postValue(Note("Prvá poznamka", "Text prvej poznamky"))
 //        _notesList.postValue(Note("Druhá poznamka", "Text druhej poznamky"))
     }
-
+    /**
+     * Method to setup ChildListeners on database reference where Reminders are stored
+     */
     fun loadReminders() {
         if(FirebaseAuthInstance.currentUser != null) {
             fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders").addChildEventListener(
@@ -284,22 +298,34 @@ class SharedViewModel: ViewModel() {
 //        _notesList.postValue(Note("Druhá poznamka", "Text druhej poznamky"))
     }
 
+    /**
+     * Method to log in user with FirebaseAuth instance using his email and password
+     * @param userEmail email of user
+     * @param userPassword password of suer
+     * @param view to display message and navigate back
+     */
     fun LogInUser(userEmail: String, userPassword: String) {
         FirebaseAuthInstance.signInWithEmailAndPassword(userEmail,userPassword).addOnSuccessListener {
             _logedIn.postValue(true)
         }
     }
-
+    /**
+     * Method to register user with FirebaseAuth instance using his email and password
+     * @param userEmail email of user
+     * @param userPassword password of suer
+     * @param view to display message and navigate back
+     */
     fun registerNewUser(userEmail: String, userPassword: String) {
         FirebaseAuthInstance.createUserWithEmailAndPassword(userEmail,userPassword).addOnSuccessListener {
             _registered.postValue(true)
             _logedIn.postValue(true)
         }
-            .addOnFailureListener {
-                Log.e(TAG, "registerNewUser: ${it}", )
-            }
     }
 
+    /**
+     * Method to add name of new TodoItem into newtodoItemsList
+     * @param todoItem name of new TodoItem
+     */
     fun addNewTodoItem(todoItem: String): Boolean {
         if(!newtodoItemsList.contains(todoItem)) {
             newtodoItemsList.add(todoItem)
@@ -309,7 +335,12 @@ class SharedViewModel: ViewModel() {
         return false
 
     }
-
+    /**
+     * Method to create new instance of TodoList and stores it in database
+     * as Todos uses newtodoItemsList and for each element creates new Todoitem
+     * @param todoListName name of the Note
+     * @param view to display message and navigate back from form
+     */
     fun saveNewTodoList(view: View?, todoListName: String) {
         val todoItems = mutableMapOf<String,TodoItem>()
         newtodoItemsList.forEach { todoItems.put(it, TodoItem(it,false))  }
@@ -325,6 +356,14 @@ class SharedViewModel: ViewModel() {
         }
     }
 
+    /**
+     * Method to create new instance of Reminder and stores it in database
+     * @param Name name of the Reminder
+     * @param Desc description of the Reminder
+     * @param Date Date of the Reminder
+     * @param Time Time of the Reminder
+     * @param view to display message and navigate back from form
+     */
     fun saveNewReminder(view: View?, Name: String, Desc: String, Date: String, Time: String) {
         val ID = fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders").push().key!!.toString()
         val newReminder = reminder(ID,Name, Desc, Date, Time)
@@ -334,12 +373,14 @@ class SharedViewModel: ViewModel() {
             Toast.makeText(view!!.context, R.string.new_reminder_added, Toast.LENGTH_SHORT).show()
             view.findNavController().navigateUp()
         }
-
     }
-
-
 }
 
+/**
+ * function to map string of "true" to value of boolean true
+ * or anything else to false
+ * @return Boolean value of input
+ */
 private fun Any?.toBoolean(): Boolean {
     return if (this.toString().equals("true")) true else false
 }

@@ -55,20 +55,26 @@ class TodosFragment : Fragment() {
         loadTodos()
     }
 
+    /**
+     * setup onClick listeners for buttons
+     */
     private fun setupOnclick() {
-        binding.createNewTodobtn.setOnClickListener { findNavController().navigate(TodosFragmentDirections.actionTodosFragmentToNewTodoFragment()) }
+
         binding.goToNotesFromTodos.setOnClickListener { findNavController().navigate(TodosFragmentDirections.actionTodosFragmentToNotesFragment()) }
         binding.createNewTodobtn.setOnClickListener { findNavController().navigate(TodosFragmentDirections.actionTodosFragmentToNewTodoFragment()) }
         binding.goToRemindersFromTodos.setOnClickListener { findNavController().navigate(TodosFragmentDirections.actionTodosFragmentToRemindersFragment()) }
     }
-
+    /**
+     * method to setup observer for todosList mutableLiveData and updating adapter of recycler view
+     */
     private fun loadTodos() {
         viewModel.todosList.observe(viewLifecycleOwner, Observer {
-//            adapter.update(it.toNoteItem())
             adapter.update(it.toTodoListItem())
         })
     }
-
+    /**
+     * method map List of TodoLists to List of TodoGroupieListitems for groupie adapter of recycler view
+     */
     private fun List<TodoList>.toTodoListItem(): List<TodoGroupieListItem> {
         return this.map {
             TodoGroupieListItem(it)

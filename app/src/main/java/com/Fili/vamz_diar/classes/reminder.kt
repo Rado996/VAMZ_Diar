@@ -3,13 +3,21 @@ package com.Fili.vamz_diar.classes
 import android.os.Parcel
 import android.os.Parcelable
 
+/**
+ * Class representing instance of reminder object
+ * @param reminderID Id of reminder
+ * @param reminderName name of reminder
+ * @param reminderDesc description of reminder
+ * @param reminderDate date of reminder
+ * @param reminderTime time of reminder
+ * @constructor
+ */
+
 class reminder(val reminderID: String? = null,
                var reminderName: String? = null,
                var reminderDesc: String? = null,
                var reminderDate: String? = null,
                var reminderTime: String? = null): Parcelable{
-
-
 
 
     constructor(parcel: Parcel) : this(

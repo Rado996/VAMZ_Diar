@@ -12,7 +12,7 @@ import com.xwray.groupie.viewbinding.BindableItem
 
 class NoteGroupieItem(private val pnote: Note): BindableItem<NotesItemBinding>() {
     /**
-     * Perform any actions required to set up the view for display.
+     * Class that displays Notes data in recycler view in NotesFragment
      *
      * @param viewBinding The ViewBinding to bind
      * @param position The adapter position

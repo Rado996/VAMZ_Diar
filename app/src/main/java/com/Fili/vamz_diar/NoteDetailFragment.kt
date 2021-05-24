@@ -14,7 +14,7 @@ import com.Fili.vamz_diar.databinding.FragmentNoteDetailBinding
 private const val NavigationParameter = "note"
 
 /**
- * A simple [Fragment] subclass.
+ * A simple [Fragment] subclass that shows detail data of selected Note from recyclerview.
  * Use the [NoteDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
@@ -43,9 +43,19 @@ class NoteDetailFragment : Fragment() {
         return view
     }
 
+    /**
+     * setups textViews
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.noteNameDetail.text = note.noteName
         binding.noteTextDetail.text = note.noteText
+        setupOnclicks()
+    }
+    /**
+     * Function to setup onClick listeners for edit and delete buttons
+     */
+    private fun setupOnclicks() {
+
     }
 
 

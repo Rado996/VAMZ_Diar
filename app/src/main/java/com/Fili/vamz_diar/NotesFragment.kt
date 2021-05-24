@@ -18,9 +18,6 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
 
-
-
-
 /**
  * A simple [Fragment] subclass.
  * Use the [NotesFragment.newInstance] factory method to
@@ -66,31 +63,38 @@ class NotesFragment : Fragment() {
 
     }
 
+    /**
+     * Setup onClick listeners for views
+     */
     private fun setupOnClicks() {
         binding.createNewNotebtn.setOnClickListener { createNewNote() }
         binding.goToTodosFromNotes.setOnClickListener { findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToTodosFragment()) }
         binding.goToRemindersFromNotes.setOnClickListener { findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToRemindersFragment()) }
     }
 
+    /**
+     * Setup observer for live data of Notes and store it in adapter for recyclerView
+     */
     private fun loadNotes() {
-//        adapter.addAll(viewModel.notesList.toNoteItem())
         viewModel.notesList.observe(viewLifecycleOwner, Observer {
-//            adapter.update(it.toNoteItem())
             adapter.update(it.toNoteItem())
         })
     }
-
+    /**
+     *Converts List of Notes to List of NoteGroupieItems for groupie adapter for recycler view
+     * @param List<Note>
+     * @return List<NoteGroupieItem>
+     */
     private fun List<Note>.toNoteItem(): List<NoteGroupieItem> {
         return this.map {
             NoteGroupieItem(it)
         }
     }
-
+    /**
+     * creates action to navigate from notesFragment to createNewNoteFragment
+     */
     private fun createNewNote() {
-        // Create an action from notesFragment to createNewNoteFragment
-        // using the required arguments
         val action = NotesFragmentDirections.actionNotesFragmentToNewNoteFragment(note = null)
-        // Navigate using that action
         findNavController().navigate(action)
     }
 
@@ -98,7 +102,6 @@ class NotesFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }
 

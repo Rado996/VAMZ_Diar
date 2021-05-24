@@ -17,9 +17,8 @@ import com.Fili.vamz_diar.groupieItems.TodoGroupieNewItem
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
+
+private const val ARG_PARAM1 = "todo"
 
 
 /**
@@ -29,7 +28,7 @@ private const val ARG_PARAM1 = "param1"
  */
 class NewTodoFragment : Fragment() {
 
-    private var param1: String? = null
+    private var param1: TodoList? = null
     private var TodoParam: TodoList? = null
     private var _binding: FragmentNewTodoBinding? = null
     private val binding get() = _binding!!
@@ -41,7 +40,7 @@ class NewTodoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            param1 = it.getParcelable(ARG_PARAM1)
 
         }
     }
@@ -63,35 +62,50 @@ class NewTodoFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         setupTodosObserver()
     }
-
+    /**
+     * Method to set up onClickListeners for buttons
+     */
     private fun setupOnclicks() {
         binding.newTodoitemAddbtn.setOnClickListener { addnewTodoItem() }
         binding.newTodoSavebtn.setOnClickListener { savenewTodoList() }
     }
 
+    /**
+     * Method to save new TodoList with viewModel
+     */
     private fun savenewTodoList() {
         if(adapter.groupCount >0 && !binding.newTodoName.text.isBlank()) {
             viewModel.saveNewTodoList(view, binding.newTodoName.text.toString())
-
         }
     }
 
+    /**
+     * Method to add name of new todoItem into
+     * newTodoItemsLiveData in viewModel.
+     */
     private fun addnewTodoItem() {
         if(!binding.newTodoitemName.text.isBlank()) {
             if(viewModel.addNewTodoItem(binding.newTodoitemName.text.toString()))
                 binding.newTodoitemName.text.clear()
             else
                 Toast.makeText(context, R.string.new_todoitem_already_added, Toast.LENGTH_SHORT).show()
-
         }
     }
 
+    /**
+     * Method to setup observer for liveData attribute of added names of todos
+     * and updating adapter of recyclerView.
+     */
     private fun setupTodosObserver() {
         viewModel.newTodoItemsLiveData.observe(viewLifecycleOwner, Observer {
             adapter.update(it.toTodoItem())
         })
     }
-
+    /**
+     * Method to map List of strings
+     * to List of TodoGroupieNewItem for groupie adapter of recycler view
+     * to display added names of todos.
+     */
     private fun List<String>.toTodoItem(): List<TodoGroupieNewItem> {
         return this.map {
             TodoGroupieNewItem(it)
@@ -104,15 +118,13 @@ class NewTodoFragment : Fragment() {
          * this fragment using the provided parameters.
          *
          * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment NewTodoFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: TodoList) =
             NewTodoFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putParcelable(ARG_PARAM1, param1)
 
                 }
             }
