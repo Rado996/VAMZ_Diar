@@ -1,7 +1,5 @@
 package com.Fili.vamz_diar
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
@@ -87,7 +85,7 @@ class SharedViewModel: ViewModel() {
                         snapshot.child("todos").children.forEach {
                             todoItems.put(it.key.toString(), TodoItem(it.key.toString(), it.child("itemState").value.toBoolean()))
                         }
-                        val todo = TodoList(todoListName, todoListID, todoItems)
+                        val todo = TodoList(todoListID, todoListName, todoItems)
                         firebaseTodos.add(todo!!)
                         _todosList.postValue(firebaseTodos)
                     }
@@ -100,7 +98,19 @@ class SharedViewModel: ViewModel() {
                      * be null for the first child node of a location.
                      */
                     override fun onChildChanged(snapshot: DataSnapshot,previousChildName: String?) {
-
+                        val todoListName = snapshot.child("todoListName").value.toString()
+                        val todoListID = snapshot.child("todoListID").value.toString()
+                        val todoItems = mutableMapOf<String, TodoItem>()
+                        snapshot.child("todos").children.forEach {
+                            todoItems.put(it.key.toString(), TodoItem(it.key.toString(), it.child("itemState").value.toBoolean()))
+                        }
+                        val todo = TodoList(todoListID,todoListName,  todoItems)
+                        firebaseTodos.forEach {
+                            if (it.todoListID == todoListID )
+                                firebaseTodos.remove(it)
+                        }
+                        firebaseTodos.add(todo!!)
+                        _todosList.postValue(firebaseTodos)
                     }
 
                     /**
@@ -110,7 +120,12 @@ class SharedViewModel: ViewModel() {
                      * @param snapshot An immutable snapshot of the data at the child that was removed.
                      */
                     override fun onChildRemoved(snapshot: DataSnapshot) {
-
+                        val todoListID = snapshot.child("todoListID").value.toString()
+                        firebaseTodos.forEach {
+                            if (it.todoListID == todoListID )
+                                firebaseTodos.remove(it)
+                        }
+                        _todosList.postValue(firebaseTodos)
                     }
 
                     /**
@@ -143,12 +158,30 @@ class SharedViewModel: ViewModel() {
      * @param noteText text of the Note
      * @param view to display message and navigate back from form
      */
-    fun saveNewNote(noteName: String, noteText: String){
-
+    fun saveNewNote(note: Note? , noteName: String, noteText: String, view: View?){
         if(FirebaseAuthInstance.currentUser != null) {
-            val newNote = Note(noteName, noteText)
-            fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Notes").push().setValue(newNote).addOnSuccessListener {
-
+            if(note != null){
+                val newNote = Note(note.noteID, noteName, noteText)
+                fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Notes/${note.noteID}").setValue(newNote).addOnSuccessListener {
+                    Toast.makeText(view!!.context, R.string.note_edited, Toast.LENGTH_SHORT).show()
+                    view.findNavController().navigateUp()
+                }
+                    .addOnFailureListener {
+                        Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
+                    }
+            }else {
+                val ID =
+                    fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Notes")
+                        .push().key.toString()
+                val newNote = Note(ID, noteName, noteText)
+                fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Notes/${ID}")
+                    .setValue(newNote).addOnSuccessListener {
+                    Toast.makeText(view!!.context, R.string.note_added, Toast.LENGTH_SHORT).show()
+                    view.findNavController().navigateUp()
+                }
+                    .addOnFailureListener {
+                        Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
+                    }
             }
         }
     }
@@ -156,11 +189,7 @@ class SharedViewModel: ViewModel() {
      * Method to setup ChildListeners on database reference where Notes are saved     *
      */
     fun loadNotes() {
-//        _notesList.apply {
-//            value = listOf(Note("Prvá poznamka", "Text prvej poznamky"))
-//            value = listOf(Note("Druhá poznamka", "Text druhej poznamky"))
-//            value = listOf(Note("Truhá poznamka", "Text druhej poznamky"))
-//        }
+
         if(FirebaseAuthInstance.currentUser != null) {
             fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Notes").addChildEventListener(
                 object : ChildEventListener {
@@ -186,7 +215,13 @@ class SharedViewModel: ViewModel() {
                      * be null for the first child node of a location.
                      */
                     override fun onChildChanged(snapshot: DataSnapshot,previousChildName: String?) {
-
+                        val note = snapshot.getValue(Note::class.java)
+                        firebaseNotes.forEach {
+                            if (it.noteID == note!!.noteID)
+                                firebaseNotes.remove(it)
+                        }
+                        firebaseNotes.add(note!!)
+                        _notesList.postValue(firebaseNotes)
                     }
 
                     /**
@@ -196,7 +231,12 @@ class SharedViewModel: ViewModel() {
                      * @param snapshot An immutable snapshot of the data at the child that was removed.
                      */
                     override fun onChildRemoved(snapshot: DataSnapshot) {
-
+                        val note = snapshot.getValue(Note::class.java)
+                        firebaseNotes.forEach {
+                            if (it.noteID == note!!.noteID)
+                                firebaseNotes.remove(it)
+                        }
+                        _notesList.postValue(firebaseNotes)
                     }
 
                     /**
@@ -224,8 +264,7 @@ class SharedViewModel: ViewModel() {
                 })
 
         }
-//        _notesList.postValue(Note("Prvá poznamka", "Text prvej poznamky"))
-//        _notesList.postValue(Note("Druhá poznamka", "Text druhej poznamky"))
+
     }
     /**
      * Method to setup ChildListeners on database reference where Reminders are stored
@@ -256,7 +295,13 @@ class SharedViewModel: ViewModel() {
                      * be null for the first child node of a location.
                      */
                     override fun onChildChanged(snapshot: DataSnapshot,previousChildName: String?) {
-
+                        val reminder = snapshot.getValue(reminder::class.java)
+                        firebaseReminders.forEach {
+                            if (it.reminderID == reminder!!.reminderID)
+                                firebaseReminders.remove(it)
+                        }
+                        firebaseReminders.add(reminder!!)
+                        _remindersList.postValue(firebaseReminders)
                     }
 
                     /**
@@ -266,7 +311,12 @@ class SharedViewModel: ViewModel() {
                      * @param snapshot An immutable snapshot of the data at the child that was removed.
                      */
                     override fun onChildRemoved(snapshot: DataSnapshot) {
-
+                        val reminder = snapshot.getValue(reminder::class.java)
+                        firebaseReminders.forEach {
+                            if (it.reminderID == reminder!!.reminderID)
+                                firebaseReminders.remove(it)
+                        }
+                        _remindersList.postValue(firebaseReminders)
                     }
 
                     /**
@@ -294,8 +344,7 @@ class SharedViewModel: ViewModel() {
                 })
 
         }
-//        _notesList.postValue(Note("Prvá poznamka", "Text prvej poznamky"))
-//        _notesList.postValue(Note("Druhá poznamka", "Text druhej poznamky"))
+
     }
 
     /**
@@ -304,21 +353,30 @@ class SharedViewModel: ViewModel() {
      * @param userPassword password of suer
      * @param view to display message and navigate back
      */
-    fun LogInUser(userEmail: String, userPassword: String) {
+    fun LogInUser(userEmail: String, userPassword: String, view: View?) {
         FirebaseAuthInstance.signInWithEmailAndPassword(userEmail,userPassword).addOnSuccessListener {
-            _logedIn.postValue(true)
+//            _logedIn.postValue(true)
+            Toast.makeText(view?.context, R.string.login_succes, Toast.LENGTH_SHORT).show()
+            view!!.findNavController().navigateUp()
+        }.addOnFailureListener {
+            Toast.makeText(view?.context, it.toString(), Toast.LENGTH_SHORT).show()
         }
     }
+
     /**
      * Method to register user with FirebaseAuth instance using his email and password
      * @param userEmail email of user
      * @param userPassword password of suer
      * @param view to display message and navigate back
      */
-    fun registerNewUser(userEmail: String, userPassword: String) {
+    fun registerNewUser(userEmail: String, userPassword: String, view: View?) {
         FirebaseAuthInstance.createUserWithEmailAndPassword(userEmail,userPassword).addOnSuccessListener {
-            _registered.postValue(true)
-            _logedIn.postValue(true)
+//            _registered.postValue(true)
+//            _logedIn.postValue(true)
+            Toast.makeText(view?.context, R.string.register_succes, Toast.LENGTH_SHORT).show()
+            view!!.findNavController().navigateUp()
+        }.addOnFailureListener {
+            Toast.makeText(view?.context, it.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -333,7 +391,6 @@ class SharedViewModel: ViewModel() {
             return true
         }
         return false
-
     }
     /**
      * Method to create new instance of TodoList and stores it in database
@@ -341,19 +398,35 @@ class SharedViewModel: ViewModel() {
      * @param todoListName name of the Note
      * @param view to display message and navigate back from form
      */
-    fun saveNewTodoList(view: View?, todoListName: String) {
+    fun saveNewTodoList(view: View?, todoListName: String, todoList: TodoList?) {
         val todoItems = mutableMapOf<String,TodoItem>()
         newtodoItemsList.forEach { todoItems.put(it, TodoItem(it,false))  }
-
+        if(todoList != null) {
+            val newTodoList = TodoList(todoList.todoListID,todoListName, todoItems)
+            fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Todos/${todoList.todoListID}").setValue(newTodoList).addOnSuccessListener{
+                newtodoItemsList.clear()
+                todoItems.clear()
+                _newTodoItemsLiveData.postValue(newtodoItemsList)
+                Toast.makeText(view!!.context, R.string.todo_edited, Toast.LENGTH_SHORT).show()
+                view.findNavController().navigateUp()
+            }
+                .addOnFailureListener {
+                    Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
+                }
+        }
         val ID = fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Todos").push().key!!.toString()
-        val newTodoList = TodoList(todoListName,ID, todoItems)
+        val newTodoList = TodoList(ID,todoListName, todoItems)
         fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Todos/${ID}").setValue(newTodoList).addOnSuccessListener{
             newtodoItemsList.clear()
             todoItems.clear()
             _newTodoItemsLiveData.postValue(newtodoItemsList)
             Toast.makeText(view!!.context, R.string.new_todo_added, Toast.LENGTH_SHORT).show()
             view.findNavController().navigateUp()
+        }.
+        addOnFailureListener {
+            Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
         }
+
     }
 
     /**
@@ -364,14 +437,60 @@ class SharedViewModel: ViewModel() {
      * @param Time Time of the Reminder
      * @param view to display message and navigate back from form
      */
-    fun saveNewReminder(view: View?, Name: String, Desc: String, Date: String, Time: String) {
-        val ID = fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders").push().key!!.toString()
-        val newReminder = reminder(ID,Name, Desc, Date, Time)
-        fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders/${ID}").setValue(newReminder).addOnSuccessListener{
+    fun saveNewReminder(view: View?, Name: String, Desc: String, Date: String, Time: String, reminder: reminder?) {
+        if (reminder != null) {
+            val newReminder = reminder(reminder.reminderID, Name, Desc, Date, Time)
+            fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders/${reminder.reminderID}")
+                .setValue(newReminder).addOnSuccessListener {
+                    _newTodoItemsLiveData.postValue(newtodoItemsList)
+                    Toast.makeText(view!!.context, R.string.new_reminder_added, Toast.LENGTH_SHORT)
+                    .show()
+                    view.findNavController().navigateUp()
+            }
+                .addOnFailureListener {
+                    Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
+                }
+        }else {
+            val ID =
+                fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders")
+                    .push().key!!.toString()
+            val newReminder = reminder(ID, Name, Desc, Date, Time)
+            fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders/${ID}")
+                .setValue(newReminder).addOnSuccessListener {
 
-            _newTodoItemsLiveData.postValue(newtodoItemsList)
-            Toast.makeText(view!!.context, R.string.new_reminder_added, Toast.LENGTH_SHORT).show()
+                _newTodoItemsLiveData.postValue(newtodoItemsList)
+                Toast.makeText(view!!.context, R.string.new_reminder_added, Toast.LENGTH_SHORT)
+                    .show()
+                view.findNavController().navigateUp()
+            }
+                .addOnFailureListener {
+                    Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    fun deleteNote(note: Note, view: View?) {
+        fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Notes/${note.noteID}").removeValue().addOnSuccessListener {
+            Toast.makeText(view!!.context, R.string.note_deleted, Toast.LENGTH_SHORT).show()
             view.findNavController().navigateUp()
+        }.addOnFailureListener {
+            Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+    fun deleteTodoList(todoList: TodoList, view: View?) {
+        fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Todos/${todoList.todoListID}").removeValue().addOnSuccessListener {
+            Toast.makeText(view!!.context, R.string.todolist_deleted, Toast.LENGTH_SHORT).show()
+            view.findNavController().navigateUp()
+        }.addOnFailureListener {
+            Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+    fun deleteReminder(reminder: reminder, view: View?) {
+        fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders/${reminder.reminderID}").removeValue().addOnSuccessListener {
+            Toast.makeText(view!!.context, R.string.reminder_deleted, Toast.LENGTH_SHORT).show()
+            view.findNavController().navigateUp()
+        }.addOnFailureListener {
+            Toast.makeText(view!!.context, it.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 }

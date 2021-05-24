@@ -1,10 +1,9 @@
 package com.Fili.vamz_diar
 
 import android.os.Bundle
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.Fili.vamz_diar.classes.reminder
 import com.Fili.vamz_diar.databinding.FragmentRemindersBinding
 import com.Fili.vamz_diar.groupieItems.ReminderGroupieItem
+import com.google.firebase.auth.FirebaseAuth
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
@@ -33,7 +33,7 @@ class RemindersFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -53,13 +53,31 @@ class RemindersFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         if(viewModel.FirebaseAuthInstance.currentUser == null) {
-            val action = NotesFragmentDirections.actionNotesFragmentToLoginFragment() // TODO: 22.05.2021
+            val action = RemindersFragmentDirections.actionRemindersFragmentToLoginFragment() // TODO: 22.05.2021
             // Navigate using that action
             findNavController().navigate(action)
         }
         loadReminders()
-
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.logoutBtn) {
+             if (viewModel.FirebaseAuthInstance.currentUser != null){
+                FirebaseAuth.getInstance().signOut()
+                Toast.makeText(context, R.string.logout_message, Toast.LENGTH_SHORT).show()
+                val action = RemindersFragmentDirections.actionRemindersFragmentToLoginFragment()
+                findNavController().navigate(action)
+            } else
+                Toast.makeText(context, R.string.not_logged_in, Toast.LENGTH_SHORT).show()
+            return true
+        }
+        return false
+    }
+
+
 
     /**
      * method to setup observer for remindersList mutableLiveData and updating adapter of recycler view
@@ -85,7 +103,7 @@ class RemindersFragment : Fragment() {
     private fun setupOnClicks() {
         binding.goToNotesFromReminders.setOnClickListener { findNavController().navigate(RemindersFragmentDirections.actionRemindersFragmentToNotesFragment()) }
         binding.goToTodosFromReminders.setOnClickListener { findNavController().navigate(RemindersFragmentDirections.actionRemindersFragmentToTodosFragment()) }
-        binding.newReminderbtn.setOnClickListener { findNavController().navigate(RemindersFragmentDirections.actionRemindersFragmentToNewReminderFragment()) }
+        binding.newReminderbtn.setOnClickListener { findNavController().navigate(RemindersFragmentDirections.actionRemindersFragmentToNewReminderFragment(reminder = reminder())) }
     }
 
     override fun onDestroyView() {

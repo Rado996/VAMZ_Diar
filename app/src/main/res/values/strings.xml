@@ -37,4 +37,13 @@
     <string name="date_picker_past_time">Bol zvolený čas v minulosti.</string>
     <string name="new_reminder_added">Pripomienka bola vytvorená</string>
     <string name="reminders">Reminders</string>
+    <string name="note_deleted">Poznámka bola úspešne vymazaná.</string>
+    <string name="note_edited">Poznámka bola úspešne upravená.</string>
+    <string name="note_added">Poznámka bola úspešne vytvorená.</string>
+    <string name="todo_edited">Zoznam úloh bol upravený.</string>
+    <string name="todolist_deleted">Zoznam úloh bol vymazaný.</string>
+    <string name="reminder_deleted">Pripomienka bola vymazaná</string>
+    <string name="action_logout">Odhlásiť</string>
+    <string name="logout_message">Boli ste ohlásený.</string>
+    <string name="not_logged_in">Nie ste prihlásený.</string>
 </resources>

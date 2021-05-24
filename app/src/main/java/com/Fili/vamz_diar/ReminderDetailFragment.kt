@@ -68,7 +68,8 @@ class ReminderDetailFragment : Fragment() {
      * Function to setup onClick listeners for edit and delete buttons
      */
     private fun setupOnClicks() {
-
+        binding.reminderDeleteButton.setOnClickListener { viewModel.deleteReminder(param1!!,view) }
+        binding.reminderEditButton.setOnClickListener { findNavController().navigate(ReminderDetailFragmentDirections.actionReminderDetailFragmentToNewReminderFragment(reminder = param1!!)) }
     }
 
     override fun onDestroyView() {

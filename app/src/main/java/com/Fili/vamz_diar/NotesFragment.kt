@@ -1,9 +1,8 @@
 package com.Fili.vamz_diar
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.Fili.vamz_diar.classes.Note
 import com.Fili.vamz_diar.databinding.FragmentNotesBinding
 import com.Fili.vamz_diar.groupieItems.NoteGroupieItem
+import com.google.firebase.auth.FirebaseAuth
 
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
@@ -35,7 +35,7 @@ class NotesFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -60,7 +60,30 @@ class NotesFragment : Fragment() {
             findNavController().navigate(action)
         }
         loadNotes()
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.logoutBtn -> {  if (viewModel.FirebaseAuthInstance.currentUser != null){
+                FirebaseAuth.getInstance().signOut()
+                Toast.makeText(context, R.string.logout_message, Toast.LENGTH_SHORT).show()
+                val action = NotesFragmentDirections.actionNotesFragmentToLoginFragment()
+                findNavController().navigate(action)
+            } else
+                Toast.makeText(context, R.string.not_logged_in, Toast.LENGTH_SHORT).show()
+
+                return true
+            }
+            // Otherwise, do nothing and use the core event handling
+            // when clauses require that all possible paths be accounted for explicitly,
+            // for instance both the true and false cases if the value is a Boolean,
+            // or an else to catch all unhandled cases.
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     /**

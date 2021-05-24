@@ -14,10 +14,10 @@ import android.os.Parcelable
  */
 
 class reminder(val reminderID: String? = null,
-               var reminderName: String? = null,
-               var reminderDesc: String? = null,
-               var reminderDate: String? = null,
-               var reminderTime: String? = null): Parcelable{
+               val reminderName: String? = null,
+               val reminderDesc: String? = null,
+               val reminderDate: String? = null,
+               val reminderTime: String? = null): Parcelable{
 
 
     constructor(parcel: Parcel) : this(

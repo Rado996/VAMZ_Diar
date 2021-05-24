@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.Fili.vamz_diar.classes.TodoItem
@@ -57,7 +58,12 @@ class TodoDetailFragment : Fragment() {
         binding.todoDetailRecyclerview.adapter = adapter
         binding.todoDetailRecyclerview.layoutManager = LinearLayoutManager(context)
         adapter.update(TodoParam!!.todos!!.toTodoGroupieItem())
+        setupOnclick()
+    }
 
+    private fun setupOnclick() {
+        binding.todoEditButton.setOnClickListener { findNavController().navigate(TodoDetailFragmentDirections.actionTodoDetailFragmentToNewTodoFragment(todolist = TodoParam )) }
+        binding.todoDeleteButton.setOnClickListener { viewModel.deleteTodoList(TodoParam!!,view) }
     }
 
     /**

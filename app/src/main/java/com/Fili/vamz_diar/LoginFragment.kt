@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.Fili.vamz_diar.databinding.FragmentLoginBinding
 
@@ -43,31 +42,26 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.loginBtn.setOnClickListener { loginUser() }
         binding.registrationBtn.setOnClickListener { registerUser() }
-//        if (viewModel.FirebaseAuthInstance.currentUser == null) {
-//            val action = NotesFragmentDirections.actionNotesFragmentToLoginFragment()
-//            // Navigate using that action
-//            findNavController().navigate(action)
-//            findNavController().navigateUp()
-//        }
 
-        viewModel.registered.observe(viewLifecycleOwner, Observer { registered->
-            if (registered == true){
-                Toast.makeText(context, R.string.register_succes, Toast.LENGTH_SHORT).show()
-//                val action = LoginFragmentDirections.actionLoginFragmentToNotesFragment()
-//                // Navigate using that action
-//                findNavController().navigate(action)
-                findNavController().navigateUp()
-            }
-        })
-        viewModel.logedIn.observe(viewLifecycleOwner, Observer { loggedIn->
-            if (loggedIn == true){
-                Toast.makeText(context, R.string.login_succes, Toast.LENGTH_SHORT).show()
-//                val action = LoginFragmentDirections.actionLoginFragmentToNotesFragment()
-//                // Navigate using that action
-//                findNavController().navigate(action)
-                  findNavController().navigateUp()
-            }
-        })
+
+//        viewModel.registered.observe(viewLifecycleOwner, Observer { registered->
+//            if (registered == true){
+//                Toast.makeText(context, R.string.register_succes, Toast.LENGTH_SHORT).show()
+////                val action = LoginFragmentDirections.actionLoginFragmentToNotesFragment()
+////                // Navigate using that action
+////                findNavController().navigate(action)
+//                findNavController().navigateUp()
+//            }
+//        })
+//        viewModel.logedIn.observe(viewLifecycleOwner, Observer { loggedIn->
+//            if (loggedIn == true){
+//                Toast.makeText(context, R.string.login_succes, Toast.LENGTH_SHORT).show()
+////                val action = LoginFragmentDirections.actionLoginFragmentToNotesFragment()
+//////                // Navigate using that action
+//////                findNavController().navigate(action)
+//                  findNavController().navigateUp()
+//            }
+//        })
 
     }
 
@@ -80,7 +74,7 @@ class LoginFragment : Fragment() {
         else {
             val userEmail = binding.authLoginEmail.text.toString().trim()
             val userPassword = binding.authLoginPassword.text.toString().trim()
-            viewModel.registerNewUser(userEmail,userPassword)
+            viewModel.registerNewUser(userEmail,userPassword,view)
         }
     }
     /**
@@ -92,7 +86,7 @@ class LoginFragment : Fragment() {
         else {
             val userEmail = binding.authLoginEmail.text.toString().trim()
             val userPassword = binding.authLoginPassword.text.toString().trim()
-            viewModel.LogInUser(userEmail,userPassword)
+            viewModel.LogInUser(userEmail,userPassword,view)
         }
     }
 

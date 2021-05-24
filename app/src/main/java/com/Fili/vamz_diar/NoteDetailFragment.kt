@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.Fili.vamz_diar.classes.Note
 import com.Fili.vamz_diar.databinding.FragmentNoteDetailBinding
 
@@ -55,7 +56,8 @@ class NoteDetailFragment : Fragment() {
      * Function to setup onClick listeners for edit and delete buttons
      */
     private fun setupOnclicks() {
-
+        binding.noteEditButton.setOnClickListener { findNavController().navigate(NoteDetailFragmentDirections.actionNoteDetailFragmentToNewNoteFragment(note = note)) }
+        binding.noteDeleteButton.setOnClickListener { viewModel.deleteNote(note, view) }
     }
 
 

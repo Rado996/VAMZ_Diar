@@ -51,7 +51,7 @@ class NewNoteFragment : Fragment() {
      * method that uses viewModel method saveNewNote to save new Note to the database
      */
     private fun saveNewNote() {
-        viewModel.saveNewNote(_binding?.newNoteName?.text.toString(), _binding?.newNoteText?.text.toString())
+        viewModel.saveNewNote(note,_binding?.newNoteName?.text.toString(), _binding?.newNoteText?.text.toString(),view )
     }
 
 

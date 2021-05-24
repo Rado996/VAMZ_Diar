@@ -18,7 +18,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 
 
-private const val ARG_PARAM1 = "todo"
+private const val ARG_PARAM1 = "todolist"
 
 
 /**
@@ -29,7 +29,6 @@ private const val ARG_PARAM1 = "todo"
 class NewTodoFragment : Fragment() {
 
     private var param1: TodoList? = null
-    private var TodoParam: TodoList? = null
     private var _binding: FragmentNewTodoBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
@@ -61,7 +60,15 @@ class NewTodoFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
         setupTodosObserver()
+        if (param1!= null)
+            setupEditData()
     }
+
+    private fun setupEditData() {
+        binding.newTodoName.setText(param1!!.todoListName)
+        param1!!.todos?.forEach { viewModel.addNewTodoItem(it.key) }
+    }
+
     /**
      * Method to set up onClickListeners for buttons
      */
@@ -75,7 +82,7 @@ class NewTodoFragment : Fragment() {
      */
     private fun savenewTodoList() {
         if(adapter.groupCount >0 && !binding.newTodoName.text.isBlank()) {
-            viewModel.saveNewTodoList(view, binding.newTodoName.text.toString())
+            viewModel.saveNewTodoList(view, binding.newTodoName.text.toString(), param1)
         }
     }
 
@@ -125,7 +132,6 @@ class NewTodoFragment : Fragment() {
             NewTodoFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(ARG_PARAM1, param1)
-
                 }
             }
     }
