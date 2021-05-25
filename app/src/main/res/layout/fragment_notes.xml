@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_alarm_24"
         android:textAllCaps="false"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 <!--    android:text="@string/reminders_button_text"-->
@@ -32,16 +33,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--    android:text="@string/todos_button_text"-->
     <ImageButton
         android:id="@+id/go_to_todos_from_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
         android:src="@drawable/ic_baseline_checklist_rtl_24"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-<!--    android:text="@string/todos_button_text"-->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notes_recycler_view"
         android:layout_width="match_parent"

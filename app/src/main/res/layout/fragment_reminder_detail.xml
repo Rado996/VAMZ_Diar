@@ -10,11 +10,13 @@
 
     <TextView
         android:id="@+id/reminder_detail_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:textSize="16sp"
+        android:layout_marginEnd="150dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,6 +55,7 @@
         android:layout_marginHorizontal="5dp"
         android:layout_marginTop="12dp"
         android:maxLines="30"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/reminder_detail_name"

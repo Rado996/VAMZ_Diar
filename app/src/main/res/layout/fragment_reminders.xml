@@ -40,17 +40,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
+        android:layout_marginBottom="4dp"
         android:src="@drawable/ic_baseline_checklist_rtl_24"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 <!--    android:text="@string/todos_button_text"-->
+
     <ImageButton
         android:id="@+id/go_to_notes_from_reminders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_edit_note_24"
         android:textAllCaps="false"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 <!--    android:text="@string/notes_button_text"-->

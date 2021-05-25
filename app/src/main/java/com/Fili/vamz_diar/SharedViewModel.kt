@@ -437,8 +437,8 @@ class SharedViewModel: ViewModel() {
      * @param Time Time of the Reminder
      * @param view to display message and navigate back from form
      */
-    fun saveNewReminder(view: View?, Name: String, Desc: String, Date: String, Time: String, reminder: reminder?) {
-        if (reminder != null) {
+    fun saveNewReminder(view: View?, Name: String, Desc: String, Date: String, Time: String, reminder: reminder) {
+        if (reminder.reminderID != null) {
             val newReminder = reminder(reminder.reminderID, Name, Desc, Date, Time)
             fireDatabase.getReference("${FirebaseAuthInstance.currentUser!!.uid}/Reminders/${reminder.reminderID}")
                 .setValue(newReminder).addOnSuccessListener {

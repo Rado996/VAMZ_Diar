@@ -56,7 +56,7 @@ class NewReminderFragment : Fragment() {
             // Navigate using that action
             findNavController().navigate(action)
         }
-        if (param1 != null)
+        if (param1!!.reminderID != null)
             setupEditData()
     }
 
@@ -87,7 +87,7 @@ class NewReminderFragment : Fragment() {
         binding.newReminderTime.setOnClickListener {
             TimePickerFragment(binding.newReminderTime).show(childFragmentManager,"timePircker")
         }
-        binding.newReminderSavebtn.setOnClickListener { viewModel.saveNewReminder(view,binding.newReminderName.text.toString(),binding.newReminderDesc.text.toString(), binding.newReminderDate.text.toString(), binding.newReminderTime.text.toString(), param1) }
+        binding.newReminderSavebtn.setOnClickListener { viewModel.saveNewReminder(view,binding.newReminderName.text.toString(),binding.newReminderDesc.text.toString(), binding.newReminderDate.text.toString(), binding.newReminderTime.text.toString(), param1!!) }
     }
 
 
